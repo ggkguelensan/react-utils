@@ -1,23 +1,31 @@
 import { useQuery } from '@tanstack/react-query';
 import { withHook } from '@ggkguelensan/react-hoc';
-import { fetchProfile, ProfileCard, ProfileError, ProfileSkeleton } from './shared.js';
+import { fetchProfile, ProfileError, ProfileSkeleton } from './shared.js';
 import type { Profile } from './shared.js';
-type ProfileState =
-  | { status: 'pending' }
-  | { status: 'error'; error: Error; retry: () => void }
-  | { status: 'success'; profile: Profile };
-export function useProfilePresentation({ userId }: { userId: string }): { state: ProfileState } {
-  const query = useQuery({ queryKey: ['profile', userId], queryFn: () => fetchProfile(userId) });
-  if (query.isPending) return { state: { status: 'pending' } };
-  if (query.isError) return { state: { status: 'error', error: query.error, retry: () => { void query.refetch(); } } };
-  return { state: { status: 'success', profile: query.data } };
+
+// A stable selector transforms successful data without changing the cached Profile.
+function selectProfileName(profile: Profile) { return profile.name; }
+
+export function useProfilePresentation({ userId }: { userId: string }) {
+  const { data: name, isPending, error, refetch } = useQuery({
+    queryKey: ['profile', userId],
+    queryFn: () => fetchProfile(userId),
+    select: selectProfileName,
+  });
+  return { name, isPending, error, refetch };
 }
-function ProfileView({ state }: { state: ProfileState }) {
-  switch (state.status) {
-    case 'pending': return <ProfileSkeleton />;
-    case 'error': return <ProfileError error={state.error} onRetry={state.retry} />;
-    case 'success': return <ProfileCard profile={state.profile} />;
-  }
+
+type ProfileViewProps = {
+  name: string | undefined;
+  isPending: boolean;
+  error: Error | null;
+  refetch: () => Promise<unknown>;
+};
+
+function ProfileView({ name, isPending, error, refetch }: ProfileViewProps) {
+  if (isPending) return <ProfileSkeleton />;
+  if (error) return <ProfileError error={error} onRetry={() => { void refetch(); }} />;
+  return <article>{name}</article>;
 }
 export const ProfileComponent = withHook(useProfilePresentation)(ProfileView);
 // Render under QueryClientProvider. The example chooses an error screen even for a failed background refetch.

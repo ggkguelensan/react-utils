@@ -273,29 +273,28 @@ Resolvers must not call hooks. The Wrapper itself is a normal React component an
 ### TanStack Query: explicit loading and error states
 
 ```tsx
+// Defined at module scope so the selector reference stays stable.
+function selectProfileName(profile: Profile) {
+  return profile.name;
+}
+
 function useProfilePresentation({ userId }: { userId: string }) {
-  const query = useQuery({
+  const { data: name, isPending, error, refetch } = useQuery({
     queryKey: ['profile', userId],
     queryFn: () => fetchProfile(userId),
+    select: selectProfileName,
   });
-
-  if (query.isPending) return { state: { status: 'pending' as const } };
-  if (query.isError) {
-    return { state: {
-      status: 'error' as const,
-      error: query.error,
-      retry: () => { void query.refetch(); },
-    } };
-  }
-  return { state: { status: 'success' as const, profile: query.data } };
+  return { name, isPending, error, refetch };
 }
 
 const Profile = withHook(useProfilePresentation)(ProfileView);
 ```
 
-The View switches on `state.status`, preserving the relationship between status and data. Render under `QueryClientProvider`. This example chooses an error screen even for a failed background refetch; applications can choose a different stale-data policy.
+Transform successful response data in `select`; keep Query's loading state, error, and refetch function as separate props. `select` receives data, not the query result, so it cannot produce the pending/error states. The cache still holds the original Profile. The View shows a skeleton while `isPending`, an error with a refetch action when `error` is present, and the selected name otherwise. `name` is typed as `string | undefined` before success.
 
-Return selected fields rather than `{ ...query }`. Spreading a Query result reads all its properties and broadens tracked subscriptions. Use Query's `select` for a narrower data projection. See the [complete example](./examples/query.tsx) and [Query render optimizations](https://tanstack.com/query/latest/docs/framework/react/guides/render-optimizations).
+Render under `QueryClientProvider`. This example chooses an error screen even for a failed background refetch; applications can choose a different stale-data policy.
+
+Return only the selected data and Query fields the View needs rather than `{ ...query }`. Spreading a Query result reads all its properties and broadens tracked subscriptions. A module-level selector keeps its reference stable between renders. See the [complete example](./examples/query.tsx) and [Query render optimizations](https://tanstack.com/query/latest/docs/framework/react/guides/render-optimizations).
 
 ### Suspense Query and retry
 
