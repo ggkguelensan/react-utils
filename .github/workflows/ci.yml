@@ -24,5 +24,6 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Select compatibility versions
-        run: pnpm add -D --ignore-scripts typescript@${{ matrix.typescript }} react@${{ matrix.react }} react-dom@${{ matrix.react }} @types/react@${{ matrix.react }}
+        run: pnpm add -D --ignore-scripts typescript@${{ matrix.typescript }} react@${{ matrix.react }} react-dom@${{ matrix.react }} @types/react@${{ matrix.react }} @types/react-dom@${{ matrix.react }}
       - run: pnpm test
+      - run: pnpm test:package

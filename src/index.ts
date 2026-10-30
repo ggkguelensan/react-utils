@@ -1,2 +1,9 @@
 export { pipe } from './pipe.js';
 export { withHook } from './with-hook.js';
+export { withStaticProps } from './with-static-props.js';
+export { mapProps } from './map-props.js';
+export { withGuard } from './with-guard.js';
+export { withSuspense } from './with-suspense.js';
+export { withErrorBoundary } from './with-error-boundary.js';
+export { withContext } from './with-context.js';
+export { withWrapper } from './with-wrapper.js';

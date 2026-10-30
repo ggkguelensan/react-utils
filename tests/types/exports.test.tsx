@@ -1,7 +1,30 @@
-import { withHook as rootWithHook, pipe as rootPipe } from '@ggkguelensan/react-utils';
-import { withHook } from '@ggkguelensan/react-utils/with-hook';
-import { pipe } from '@ggkguelensan/react-utils/pipe';
+import { withHook as rootWithHook, pipe as rootPipe } from '@ggkguelensan/react-hoc';
+import { withHook } from '@ggkguelensan/react-hoc/with-hook';
+import { pipe } from '@ggkguelensan/react-hoc/pipe';
 
 const sameHook: typeof rootWithHook = withHook;
 const samePipe: typeof rootPipe = pipe;
 export { sameHook, samePipe };
+
+import * as root from '@ggkguelensan/react-hoc';
+import { withStaticProps } from '@ggkguelensan/react-hoc/with-static-props';
+const checkedwithStaticProps: typeof root.withStaticProps = withStaticProps;
+export { checkedwithStaticProps };
+import { mapProps } from '@ggkguelensan/react-hoc/map-props';
+const checkedmapProps: typeof root.mapProps = mapProps;
+export { checkedmapProps };
+import { withGuard } from '@ggkguelensan/react-hoc/with-guard';
+const checkedwithGuard: typeof root.withGuard = withGuard;
+export { checkedwithGuard };
+import { withSuspense } from '@ggkguelensan/react-hoc/with-suspense';
+const checkedwithSuspense: typeof root.withSuspense = withSuspense;
+export { checkedwithSuspense };
+import { withErrorBoundary } from '@ggkguelensan/react-hoc/with-error-boundary';
+const checkedwithErrorBoundary: typeof root.withErrorBoundary = withErrorBoundary;
+export { checkedwithErrorBoundary };
+import { withContext } from '@ggkguelensan/react-hoc/with-context';
+const checkedwithContext: typeof root.withContext = withContext;
+export { checkedwithContext };
+import { withWrapper } from '@ggkguelensan/react-hoc/with-wrapper';
+const checkedwithWrapper: typeof root.withWrapper = withWrapper;
+export { checkedwithWrapper };

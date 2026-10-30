@@ -1,6 +1,6 @@
 import { createRef, forwardRef, memo, useState } from 'react';
 import type { ComponentProps, ComponentType, ReactElement } from 'react';
-import { pipe, withHook } from '@ggkguelensan/react-utils';
+import { pipe, withHook } from '@ggkguelensan/react-hoc';
 
 type Equal<Left, Right> = (<T>() => T extends Left ? 1 : 2) extends
   (<T>() => T extends Right ? 1 : 2) ? true : false;

@@ -1,0 +1,14 @@
+{
+  "maxGzip": {
+    "withHook": 230,
+    "withStaticProps": 230,
+    "mapProps": 210,
+    "withGuard": 260,
+    "withSuspense": 270,
+    "withErrorBoundary": 620,
+    "withContext": 240,
+    "withWrapper": 240
+  },
+  "allGzip": 1100,
+  "allWithPipeGzip": 1350
+}

@@ -1,29 +1,6 @@
 import { createElement } from 'react';
 import type { ComponentType, ReactElement } from 'react';
-
-type KeysOfUnion<Value> = Value extends unknown ? keyof Value : never;
-
-type Remaining<Props, Injected> = Props extends unknown
-  ? Omit<Props, KeysOfUnion<Injected>>
-  : never;
-
-type ExternalProps<Input, Props, Injected> = Input & Remaining<Props, Injected> & {
-  // React 18 does not forward refs through a plain function component.
-  ref?: never;
-};
-
-type Reconstructed<Props, Injected> = Props extends unknown
-  ? Remaining<Props, Injected> & Injected
-  : never;
-
-type CompatibleView<Props, Injected> = [Reconstructed<Props, Injected>] extends [Props]
-  ? unknown
-  : never;
-
-type UnsupportedResult = PromiseLike<unknown> | readonly unknown[] | ((...args: never[]) => unknown);
-type ValidResult<Injected> = [Extract<Injected, UnsupportedResult>] extends [never]
-  ? unknown
-  : never;
+import type { CompatibleView, ExternalProps, ValidResult } from './internal/props-types.js';
 
 /**
  * Injects hook results while forwarding the remaining props.

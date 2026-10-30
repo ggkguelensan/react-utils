@@ -1,37 +1,94 @@
 {
-  "name": "@ggkguelensan/react-utils",
+  "name": "@ggkguelensan/react-hoc",
   "version": "0.1.0",
   "private": true,
-  "description": "Typed React hook-to-HOC composition with passthrough props.",
+  "description": "Small, typed higher-order components for React.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "sideEffects": false,
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
-    "./pipe": { "types": "./dist/pipe.d.ts", "import": "./dist/pipe.js" },
-    "./with-hook": { "types": "./dist/with-hook.d.ts", "import": "./dist/with-hook.js" }
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./pipe": {
+      "types": "./dist/pipe.d.ts",
+      "import": "./dist/pipe.js"
+    },
+    "./with-hook": {
+      "types": "./dist/with-hook.d.ts",
+      "import": "./dist/with-hook.js"
+    },
+    "./with-static-props": {
+      "types": "./dist/with-static-props.d.ts",
+      "import": "./dist/with-static-props.js"
+    },
+    "./map-props": {
+      "types": "./dist/map-props.d.ts",
+      "import": "./dist/map-props.js"
+    },
+    "./with-guard": {
+      "types": "./dist/with-guard.d.ts",
+      "import": "./dist/with-guard.js"
+    },
+    "./with-suspense": {
+      "types": "./dist/with-suspense.d.ts",
+      "import": "./dist/with-suspense.js"
+    },
+    "./with-error-boundary": {
+      "types": "./dist/with-error-boundary.d.ts",
+      "import": "./dist/with-error-boundary.js"
+    },
+    "./with-context": {
+      "types": "./dist/with-context.d.ts",
+      "import": "./dist/with-context.js"
+    },
+    "./with-wrapper": {
+      "types": "./dist/with-wrapper.d.ts",
+      "import": "./dist/with-wrapper.js"
+    }
   },
   "scripts": {
     "prepare": "tsc -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
     "test:types": "pnpm run build && tsc -p tests/types/tsconfig.json",
     "test:runtime": "pnpm run build && node --test tests/runtime/*.test.mjs",
-    "test": "pnpm run test:types && pnpm run test:runtime"
+    "test": "pnpm test:types && pnpm test:examples && pnpm test:runtime && pnpm test:integrations && pnpm test:bundle",
+    "test:examples": "tsc -p examples/tsconfig.json",
+    "test:integrations": "node tests/integrations/run.mjs",
+    "test:bundle": "node tests/bundle/measure.mjs --check",
+    "size": "pnpm build && node tests/bundle/measure.mjs",
+    "test:package": "pnpm build && node tests/bundle/package.mjs",
+    "size:update": "pnpm build && node tests/bundle/measure.mjs --write-readme"
   },
-  "dependencies": { "effect": "4.1.0" },
-  "peerDependencies": { "react": "^18.0.0 || ^19.0.0" },
+  "dependencies": {
+    "effect": "4.1.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
   "devDependencies": {
     "@effector/reflect": "10.1.0",
     "@tanstack/react-query": "5.100.11",
     "@types/react": "^19.0.0",
+    "@types/react-dom": "19.2.2",
     "effector": "23.4.4",
     "effector-react": "23.3.0",
+    "esbuild": "0.25.12",
+    "jsdom": "26.1.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
+    "react-error-boundary": "6.0.0",
     "typescript": "7.0.2"
   },
   "packageManager": "pnpm@10.12.4",
-  "repository": { "type": "git", "url": "git+https://github.com/ggkguelensan/react-utils.git" }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ggkguelensan/react-utils.git"
+  }
 }
