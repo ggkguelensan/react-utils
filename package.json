@@ -1,0 +1,37 @@
+{
+  "name": "@ggkguelensan/react-utils",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Typed React hook-to-HOC composition with passthrough props.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": ["dist", "src"],
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
+    "./pipe": { "types": "./dist/pipe.d.ts", "import": "./dist/pipe.js" },
+    "./with-hook": { "types": "./dist/with-hook.d.ts", "import": "./dist/with-hook.js" }
+  },
+  "scripts": {
+    "prepare": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json",
+    "test:types": "pnpm run build && tsc -p tests/types/tsconfig.json",
+    "test:runtime": "pnpm run build && node --test tests/runtime/*.test.mjs",
+    "test": "pnpm run test:types && pnpm run test:runtime"
+  },
+  "dependencies": { "effect": "4.1.0" },
+  "peerDependencies": { "react": "^18.0.0 || ^19.0.0" },
+  "devDependencies": {
+    "@effector/reflect": "10.1.0",
+    "@tanstack/react-query": "5.100.11",
+    "@types/react": "^19.0.0",
+    "effector": "23.4.4",
+    "effector-react": "23.3.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "7.0.2"
+  },
+  "packageManager": "pnpm@10.12.4",
+  "repository": { "type": "git", "url": "git+https://github.com/ggkguelensan/react-utils.git" }
+}
