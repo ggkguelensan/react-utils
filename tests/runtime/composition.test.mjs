@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createElement, useState } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { pipe, withHook } from '@ggkguelensan/react-utils';
+import { pipe, withHook } from '@ggkguelensan/react-hoc';
 
 test('pipe runs left to right and preserves identity with no operators', () => {
   const value = { count: 1 };

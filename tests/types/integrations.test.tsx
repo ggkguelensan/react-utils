@@ -3,7 +3,7 @@ import { createStore } from 'effector';
 import { useUnit } from 'effector-react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import type { ComponentProps, ReactElement } from 'react';
-import { pipe, withHook } from '@ggkguelensan/react-utils';
+import { pipe, withHook } from '@ggkguelensan/react-hoc';
 
 function CountView(props: { count: number | undefined; label: string }): ReactElement {
   return <span>{props.label}{props.count}</span>;

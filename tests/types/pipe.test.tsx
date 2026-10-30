@@ -1,4 +1,4 @@
-import { pipe } from '@ggkguelensan/react-utils/pipe';
+import { pipe } from '@ggkguelensan/react-hoc/pipe';
 type Equal<Left, Right> = (<T>() => T extends Left ? 1 : 2) extends
   (<T>() => T extends Right ? 1 : 2) ? true : false;
 type Expect<Value extends true> = Value;
