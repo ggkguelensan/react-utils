@@ -273,16 +273,11 @@ Resolvers must not call hooks. The Wrapper itself is a normal React component an
 ### TanStack Query: explicit loading and error states
 
 ```tsx
-// Defined at module scope so the selector reference stays stable.
-function selectProfileName(profile: Profile) {
-  return profile.name;
-}
-
 function useProfilePresentation({ userId }: { userId: string }) {
   const { data: name, isPending, error, refetch } = useQuery({
     queryKey: ['profile', userId],
     queryFn: () => fetchProfile(userId),
-    select: selectProfileName,
+    select: profile => profile.name,
   });
   return { name, isPending, error, refetch };
 }
@@ -294,7 +289,7 @@ Transform successful response data in `select`; keep Query's loading state, erro
 
 Render under `QueryClientProvider`. This example chooses an error screen even for a failed background refetch; applications can choose a different stale-data policy.
 
-Return only the selected data and Query fields the View needs rather than `{ ...query }`. Spreading a Query result reads all its properties and broadens tracked subscriptions. A module-level selector keeps its reference stable between renders. See the [complete example](./examples/query.tsx) and [Query render optimizations](https://tanstack.com/query/latest/docs/framework/react/guides/render-optimizations).
+Return only the selected data and Query fields the View needs rather than `{ ...query }`. Spreading a Query result reads all its properties and broadens tracked subscriptions. See the [complete example](./examples/query.tsx) and [Query render optimizations](https://tanstack.com/query/latest/docs/framework/react/guides/render-optimizations).
 
 ### Suspense Query and retry
 
